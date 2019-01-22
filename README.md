@@ -18,7 +18,7 @@ On top of this key feature, our app can:
   
 This first release of the Study Manager is designed specifically for Ibex experiments, but it contains helper functions for custom experiments that the researcher can host directly from the server. We use the application for this purpose in our lab, and I will provide a dummy example soon that fully demonstrates this alternative functionality.
  
-Installation
+## Installation
 ------------
 Currently, we find it easiest to set up `mTurk Study Manager` as a Heroku application using an SQLAlchemy database. Otherwise, the user will need to use their own computer as a high-traffic server or use a service like webfactional for hosting. These options will be fleshed out soon.
 
@@ -46,7 +46,7 @@ Now, you can deploy your application with these three steps
         
 
         
-Configuration
+## Configuration
 ------------
         
 The final step will be to fill in your app's config file with the necessary credentials to interface with your Amazon Web Services account and your SQLAlchemy database.
@@ -57,14 +57,14 @@ For your `SQLALCHEMY_DATABASE_URI`, you can find this by logging into heroku.com
 
 You will also need to input your app's name (exactly as it appears) for the `APP_NAME` field, and you should provide a personalized password in the `PASSWORD` field, which you will use to authorize actions while using the app.
 
-Usage
+## Usage
 ------------
 
 You will use your web browser to interface with the `mTurk Study Manager`. There are a number of pages you can visit to access the features of the application, once running on heroku.
 
 Before using the app, you should set up your database by visiting `https://[your-app-name].herokuapp.com/dropTables`
 
-##Create HITs
+### Create HITs
 ------------
 
 To create a HIT, visit this URL: `https://[your-app-name].herokuapp.com/createHIT`
@@ -92,7 +92,7 @@ Once there you'll be presented with an html form that includes everything you ne
 *It should be noted that `mTurk Study Manager` uses HIT titles to keep track of past experiments. Whenever a subject completes a HIT, they will become associated with two qualifications. One will have the same name as the title of the HIT, indicating that they have completed a HIT with this Title. If you use consistent titles for different Ibex experiments you're running, you can add this qualification to the 'Excluded' list to blacklist anyone who has completed that experiment before. The other qualification is used to keep track of subjects across a series of micro-batched HITs (which is how all HITs are distributed with this app). The name of this qualification is in the form '{HIT Title} -- {HITId}', where HITId corresponds to the ID for the first micro-batch in the series.
 
   
-##Review HITs
+### Review HITs
 ------------
 
 Once a HIT has been successfully created, you can track it's progress by visiting `https://[your-app-name].herokuapp.com/reviewHITs`
@@ -101,7 +101,7 @@ From this page, you can see how many Assignments (subjects) are pending or compl
 
 If you enter your `PASSWORD` at the top of the page, you can expire, delete, or approve all assignments for a given HIT (that is, Group of micro-batched HITs). We will be adding the ability to approve and reject and award bonuses to individual workers soon.
 
-##Reset Database
+### Reset Database
 ------------
 
 If for any reason you need to reset your database and clear your tables (make sure you approve all outstanding assignments before doing this), you can visit `https://[your-app-name].herokuapp.com/dropTables`
