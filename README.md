@@ -57,11 +57,15 @@ For your `SQLALCHEMY_DATABASE_URI`, you can find this by logging into heroku.com
 
 You will also need to input your app's name (exactly as it appears) for the `APP_NAME` field, and you should provide a personalized password in the `PASSWORD` field, which you will use to authorize actions while using the app.
 
+The `SANDBOX` variable has True as its default value. This means all the HITs you create will appear on Mechanical Turk Sandbox, where users can test out HITs for free in order to prepare them to be released in earnest. When you are ready to leave sandbox mode, change the `SANDBOX` variable to False.
+
 ## Usage
 
 You will use your web browser to interface with the `mTurk Study Manager`. There are a number of pages you can visit to access the features of the application, once running on heroku.
 
 Before using the app, you should set up your database by visiting `https://[your-app-name].herokuapp.com/dropTables`
+
+
 
 ### Create HITs
 
