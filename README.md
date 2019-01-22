@@ -1,5 +1,6 @@
 # murk-study-manager
-====
+------------
+
 The `mTurk Study Manager` is an easy-to-use Flask application designed to streamline the process of running web experiments (Ibex experiments in particular) on the Mechanical Turk platform.
 
 There are a number of mTurk interfaces available at the moment, but **this app will appeal to researchers interested in running web experiments that require multiple "lists"**, that is, multiple versions of the same experiment with different orderings of stimuli or different factors present.
@@ -25,4 +26,49 @@ First, clone this repository into a directory on your computer
       
        git clone https://github.com/jhupsycholing/mturk-ibex-study-manager.git
        
-Then, create a free Heroku account and 
+Then, create a free Heroku account if you don't already have one and select 'Create New App' once you've logged in.
+
+For 'Deployment Method', we'll be using the Heroku CLI, which you should download and install from [here][https://devcenter.heroku.com/articles/heroku-command-line]
+
+Make sure that you're logged in with the CLI by typing
+
+        heroku login
+        
+in the terminal/console and entering your account credentials. Then, you just need to add the heroku remote from within the directory you cloned into:
+
+        heroku git:remote -a [the name of your application]
+        
+Now, you can deploy your application with these three steps
+
+        git add .
+        git commit -m 'first commit'
+        git push heroku master
+        
+        
+Configuration
+------------
+        
+The final step will be to fill in your app's config file with the necessary credentials to interface with your Amazon Web Services account and your SQLAlchemy database.
+
+Inside the 'appconfig.cfg' file, which is found in the 'app' directory, you will find a template ready to fill out. For your `AWS_ACCESS_KEY` and `AWS_SECRET_ACCESS_KEY`, if you don't know how to find these, you can follow [this simple guide][https://help.bittitan.com/hc/en-us/articles/115008255268-How-do-I-find-my-AWS-Access-Key-and-Secret-Access-Key-]. 
+
+For your SQLALCHEMY_DATABASE_URI, you can find this by logging into heroku.com, navigating to the homepage for the app you've created, and checking the 'Installed Add-ons' section. If there's an add-on called 'Heroku Postgres', then click this. Otherwise click 'Configure Add-ons' and search 'postgres' to add a database. Once you've clicked on your postgres database, navigate to 'Settings' and click 'View Credentials'. Copy the field labeled 'URI' into your config file as `SQLALCHEMY_DATABASE_URI`.
+
+You will also need to input your app's name (exactly as it appears) for the `APP_NAME` field, and you should provide a personalized password in the `PASSWORD` field, which you will use to authorize actions while using the app.
+
+Usage
+------------
+
+You will use your web browser to interface with the `mTurk Study Manager`. There are a number of pages you can visit to access the features of the application, once running on heroku.
+
+To create a HIT, visit this URL: `https://[your-app-name].herokuapp.com/createHIT`
+
+Once there you'll be presented with an html form that includes everything you need to configure your first experiment:
+  - **An option to select a previous HIT that you have run**, which will then fill most of the details needed automatically
+  - **The URL for the Ibex experiment you're running**. If something other than an Ibex URL is entered here, the `mTurk Study Manager` will assume you are running a custom web experiment with your own HTML and JS set up
+  - **The Title of the HIT**. * 
+  - **
+
+
+*It should be noted that `mTurk Study Manager` uses HIT titles to keep track of past experiments. Whenever a subject completes a HIT, they will become associated with two qualifications. One will have the same name as the title of the HIT, indicating that they have completed a HIT with this Title. If you use consistent titles for different Ibex experiments you're running, you can add this qualification to the 'Excluded' list to blacklist anyone who has completed that experiment before. The other qualification is used to keep track of subjects across a series of micro-batched HITs (which is how all HITs are distributed with this app). The name of this qualification is in the form '{HIT Title} -- {HITId}', where HITId corresponds to the ID for the first micro-batch in the series.
+
