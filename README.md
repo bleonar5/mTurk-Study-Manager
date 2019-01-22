@@ -52,7 +52,7 @@ The final step will be to fill in your app's config file with the necessary cred
 
 Inside the 'appconfig.cfg' file, which is found in the 'app' directory, you will find a template ready to fill out. For your `AWS_ACCESS_KEY` and `AWS_SECRET_ACCESS_KEY`, if you don't know how to find these, you can follow [this simple guide][https://help.bittitan.com/hc/en-us/articles/115008255268-How-do-I-find-my-AWS-Access-Key-and-Secret-Access-Key-]. 
 
-For your SQLALCHEMY_DATABASE_URI, you can find this by logging into heroku.com, navigating to the homepage for the app you've created, and checking the 'Installed Add-ons' section. If there's an add-on called 'Heroku Postgres', then click this. Otherwise click 'Configure Add-ons' and search 'postgres' to add a database. Once you've clicked on your postgres database, navigate to 'Settings' and click 'View Credentials'. Copy the field labeled 'URI' into your config file as `SQLALCHEMY_DATABASE_URI`.
+For your `SQLALCHEMY_DATABASE_URI`, you can find this by logging into heroku.com, navigating to the homepage for the app you've created, and checking the 'Installed Add-ons' section. If there's an add-on called 'Heroku Postgres', then click this. Otherwise click 'Configure Add-ons' and search 'postgres' to add a database. Once you've clicked on your postgres database, navigate to 'Settings' and click 'View Credentials'. Copy the field labeled 'URI' into your config file as `SQLALCHEMY_DATABASE_URI`.
 
 You will also need to input your app's name (exactly as it appears) for the `APP_NAME` field, and you should provide a personalized password in the `PASSWORD` field, which you will use to authorize actions while using the app.
 
@@ -67,6 +67,14 @@ Once there you'll be presented with an html form that includes everything you ne
   - **An option to select a previous HIT that you have run**, which will then fill most of the details needed automatically
   - **The URL for the Ibex experiment you're running**. If something other than an Ibex URL is entered here, the `mTurk Study Manager` will assume you are running a custom web experiment with your own HTML and JS set up
   - **The Title of the HIT**. * 
+  - **A Description of the HIT**
+  - **Some Keywords to help turkers find the HIT** (separated by comma)
+  - **The Maximum Duration of your Experiment** (in minutes) -- This means that any turker who hasn't completed the HIT within this time limit will be automatically rejected. It is important to have a time limit so turkers can't accept the HIT and hold onto it as long as they want. Think of a good estimate for the duration of your experiment, then add 50% to that amount. This is probably a safe and fair Maximum Duration.
+  - **Duration of the HIT** (in days) -- This is how long the HIT will stay open for turkers to accept. 2 days is the default in our app and a reasonable choice. If you have a reason to, adjust this to your liking.
+  - **Reward for the HIT** (in dollars, e.g. 2, 2.50, etc.) -- This is how much you'll pay out for every turker you approve. Amazon will add a 20% commission to this amount. 
+  - **Will the HIT require Masters?** -- Certain experienced turkers have a special qualification called 'Masters', which indicates their experience and reliability, and incurs an additional charge. 
+  - **Will the HIT require the turker to live in the US?** -- This qualification makes sure that the turker has a US address on file, a crude method for increasing the likelihood of a native English-speaking turker.
+  - **How many lifetime HITs approved must a turker have?** -- This can be used if you want to ensure that your subjects are experienced to a certain degree with Mechanical Turk. Leave blank if not interested.
   - **
 
 
