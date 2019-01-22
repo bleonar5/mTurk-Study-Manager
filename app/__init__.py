@@ -192,14 +192,14 @@ def submitAssignment():
 
 	#if the subject has not actually started the experiment
 	if submission == None:
-		print 'no submit'
+		print('no submit')
 		return jsonify(valid='nosub')
 
 	worker = submission.worker
 
 	#if this turker's code has already been verified
 	if submission.submitted == 1:
-		print 'already submitted'
+		print('already submitted')
 		return jsonify(valid='true')
 
 	#check if submitted survey code is correct
@@ -273,6 +273,14 @@ def submitAssignment():
 						WorkerId = worker,
 						IntegerValue=0,
 						SendNotification=False)
+				#associate worker with qualification indicating they have completing a HIT within this HITGroup (group of micro-batches)
+				if hit.HITGroup in qual['name']:
+					response = client.associate_qualification_with_worker(
+						QualificationTypeId=qual['QualID'],
+						WorkerId = worker,
+						IntegerValue=0,
+						SendNotification=False)
+
 
 		#validate submission
 		response = jsonify(valid='true')
@@ -480,18 +488,19 @@ def create():
 	quals = getQualifications()
 	qual_names = [qual['name'].lower() for qual in quals]
 
-	#if no qualification has been created
+
+	#if no qualification has been created yet for this Title
 	if Title.lower() not in qual_names:
 		create_response = client.create_qualification_type(
 			Name=Title,
 			Description='Completed the study named '+Title,
 			QualificationTypeStatus='Active')	
 
-		Excluded.append(create_response['QualificationType']['QualificationTypeId'])
-	else:
-		qual_ids = [qual['QualID'] for qual in quals if qual['name'].lower() == Title.lower()]
-		for qual_id in qual_ids:
-			Excluded.append(qual_id)
+		#Excluded.append(create_response['QualificationType']['QualificationTypeId'])
+	#else:
+		#qual_ids = [qual['QualID'] for qual in quals if qual['name'].lower() == Title.lower()]
+		#for qual_id in qual_ids:
+			#Excluded.append(qual_id)
 
 
 
@@ -556,6 +565,14 @@ def create():
 			Keywords = Keywords,
 			Question = ExternalQuestion,
 			QualificationRequirements=qualificationRequirements)
+
+	#This is a special qualification to make sure that there are no repeat subjects in a group of micro-batches
+	create_response = client.create_qualification_type(
+		Name=Title + ' -- ' + response['HIT']['HITId'],
+		Description='Qualification for HITGroup',
+		QualificationTypeStatus='Active')
+
+	Excluded.append(create_response['QualificationType']['QualificationTypeId'])
 	
 
 	newHIT = HIT(HITId=response['HIT']['HITId'],title=Title,lists=str(lists),lists_distributed='[]',lists_completed='[]',batch = firstbatch,timeout=int(Timeout) * 60,ibexURL=Ibex,maxNum=total,surveyCode=surveyCode,numGrabbed=0,HITGroup = response['HIT']['HITId'],created=datetime.now())
@@ -624,7 +641,7 @@ def reviewHITs():
 				lists_completed += ast.literal_eval(h.lists_completed)
 			list_dic = {x:lists_completed.count(x) for x in lists_completed}
 			this['lists'] = list_dic
-			print workers			
+			print(workers)		
 			HIT_list.append(this)
 
 	return(render_template('HITs.html',HITs=HIT_list))
@@ -723,9 +740,9 @@ def dropTables():
 
 def checkPassword():
 	password = request.args.get('password')
-	print app.config['PASSWORD']
-	print password
-	print password == app.config['PASSWORD']
+	print(app.config['PASSWORD'])
+	print(password)
+	print(password == app.config['PASSWORD'])
 	if password == app.config['PASSWORD']:
 		return '200'
 	else:
