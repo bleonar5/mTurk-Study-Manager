@@ -92,7 +92,7 @@ Once there you'll be presented with an html form that includes everything you ne
   
 ### Review HITs
 
-Once a HIT has been successfully created, you can track it's progress by visiting `https://[your-app-name].herokuapp.com/reviewHITs`
+Once a HIT has been successfully created, you can track its progress by visiting `https://[your-app-name].herokuapp.com/reviewHITs`
 
 From this page, you can see how many Assignments (subjects) are pending or completed, as well as how many subjects have submitted for each list.
 
