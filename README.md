@@ -103,7 +103,9 @@ If you enter your `PASSWORD` at the top of the page, you can expire, delete, or 
 If for any reason you need to reset your database and clear your tables (make sure you approve all outstanding assignments before doing this), you can visit `https://[your-app-name].herokuapp.com/dropTables`
   
   
+--------------
   
+ **IMPORTANT SECURITY NOTICE** -- It is safe to push applications containing sensitive AWS credentials to heroku applications and the heroku repositories that host them, but be careful to never push a config file with AWS credentials to a public github repository for any reason. It will compromise the security of your account.
   
   
 
