@@ -192,14 +192,14 @@ def submitAssignment():
 
 	#if the subject has not actually started the experiment
 	if submission == None:
-		print('no submit')
+		print 'no submit'
 		return jsonify(valid='nosub')
 
 	worker = submission.worker
 
 	#if this turker's code has already been verified
 	if submission.submitted == 1:
-		print('already submitted')
+		print 'already submitted'
 		return jsonify(valid='true')
 
 	#check if submitted survey code is correct
@@ -641,7 +641,7 @@ def reviewHITs():
 				lists_completed += ast.literal_eval(h.lists_completed)
 			list_dic = {x:lists_completed.count(x) for x in lists_completed}
 			this['lists'] = list_dic
-			print(workers)		
+			print workers			
 			HIT_list.append(this)
 
 	return(render_template('HITs.html',HITs=HIT_list))
@@ -740,9 +740,9 @@ def dropTables():
 
 def checkPassword():
 	password = request.args.get('password')
-	print(app.config['PASSWORD'])
-	print(password)
-	print(password == app.config['PASSWORD'])
+	print app.config['PASSWORD']
+	print password
+	print password == app.config['PASSWORD']
 	if password == app.config['PASSWORD']:
 		return '200'
 	else:
