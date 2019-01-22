@@ -16,6 +16,8 @@ On top of this key feature, our app can:
   - Switch easily between Sandbox and Mechanical Turk
   
 This first release of the Study Manager is designed specifically for Ibex experiments, but it contains helper functions for custom experiments that the researcher can host directly from the server. We use the application for this purpose in our lab, and I will provide a dummy example soon that fully demonstrates this alternative functionality.
+
+**This application was developed by Brian Leonard (bleona10@jhu.edu) in his capacity as Lab Manager of the JHU Computation and Psycholinguistics Lab (http://jhpsycholing.webfactional.com/), which is overseen by Dr. Tal Linzen (http://tallinzen.net)**
  
 ## Installation
 
