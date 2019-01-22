@@ -44,6 +44,7 @@ Now, you can deploy your application with these three steps
         git commit -m 'first commit'
         git push heroku master
         
+
         
 Configuration
 ------------
@@ -61,12 +62,17 @@ Usage
 
 You will use your web browser to interface with the `mTurk Study Manager`. There are a number of pages you can visit to access the features of the application, once running on heroku.
 
+Before using the app, you should set up your database by visiting `https://[your-app-name].herokuapp.com/dropTables`
+
+##Create HITs
+------------
+
 To create a HIT, visit this URL: `https://[your-app-name].herokuapp.com/createHIT`
 
 Once there you'll be presented with an html form that includes everything you need to configure your first experiment:
   - **An option to select a previous HIT that you have run**, which will then fill most of the details needed automatically
   - **The URL for the Ibex experiment you're running**. If something other than an Ibex URL is entered here, the `mTurk Study Manager` will assume you are running a custom web experiment with your own HTML and JS set up
-  - **The Title of the HIT**. * 
+  - **The Title of the HIT** *
   - **A Description of the HIT**
   - **Some Keywords to help turkers find the HIT** (separated by comma)
   - **The Maximum Duration of your Experiment** (in minutes) -- This means that any turker who hasn't completed the HIT within this time limit will be automatically rejected. It is important to have a time limit so turkers can't accept the HIT and hold onto it as long as they want. Think of a good estimate for the duration of your experiment, then add 50% to that amount. This is probably a safe and fair Maximum Duration.
@@ -75,8 +81,35 @@ Once there you'll be presented with an html form that includes everything you ne
   - **Will the HIT require Masters?** -- Certain experienced turkers have a special qualification called 'Masters', which indicates their experience and reliability, and incurs an additional charge. 
   - **Will the HIT require the turker to live in the US?** -- This qualification makes sure that the turker has a US address on file, a crude method for increasing the likelihood of a native English-speaking turker.
   - **How many lifetime HITs approved must a turker have?** -- This can be used if you want to ensure that your subjects are experienced to a certain degree with Mechanical Turk. Leave blank if not interested.
-  - **
-
-
+  - **Groups Excluded from HIT** -- Select one your own qualifications to exclude from your subject pool. *
+  - **Groups Included in HIT** -- Select one of your own qualifications that you would like all of your subjects to possess
+  - **Ibex End-Of-Experiment Code** (CASE SENSITIVE) -- This is a survey code that you will embed at the end of your Ibex experiment, so that turkers can verify that they completed it.
+  - **Account Password** -- type in the `PASSWORD` from your config file to validate the createHIT action
+  - **Number of Lists** -- How many lists are available in your Ibex Experiment?
+  - **Equal number of subjects?** -- Will you have the same number of subjects for each list? If yes, indicate how many. If no, indicate the amount of subjects for each individual list
+  
+  
 *It should be noted that `mTurk Study Manager` uses HIT titles to keep track of past experiments. Whenever a subject completes a HIT, they will become associated with two qualifications. One will have the same name as the title of the HIT, indicating that they have completed a HIT with this Title. If you use consistent titles for different Ibex experiments you're running, you can add this qualification to the 'Excluded' list to blacklist anyone who has completed that experiment before. The other qualification is used to keep track of subjects across a series of micro-batched HITs (which is how all HITs are distributed with this app). The name of this qualification is in the form '{HIT Title} -- {HITId}', where HITId corresponds to the ID for the first micro-batch in the series.
+
+  
+##Review HITs
+------------
+
+Once a HIT has been successfully created, you can track it's progress by visiting `https://[your-app-name].herokuapp.com/reviewHITs`
+
+From this page, you can see how many Assignments (subjects) are pending or completed, as well as how many subjects have submitted for each list.
+
+If you enter your `PASSWORD` at the top of the page, you can expire, delete, or approve all assignments for a given HIT (that is, Group of micro-batched HITs). We will be adding the ability to approve and reject and award bonuses to individual workers soon.
+
+##Reset Database
+------------
+
+If for any reason you need to reset your database and clear your tables (make sure you approve all outstanding assignments before doing this), you can visit `https://[your-app-name].herokuapp.com/dropTables`
+  
+  
+  
+  
+  
+
+
 
